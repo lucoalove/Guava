@@ -5,18 +5,20 @@ Tokenize (with regex), parser (into parse tree), interpret (treat as instruction
 
 Let's see if I can handle web requests with a Ruby webserver
 
+
+
 ```
 import db from "your/db/repository/";
-import image_page from "gallery.html";
-import error_page from "404.html";
+import user_profile_page from "user_profile.gml"; // gml (guava markup language) are HTML templates
+import error_page from "404.gml";
 
-onrequest "GET" | (request_json) -> {
+onrequest "GET" | (req) -> {
 
-  if (request_json.contains("img") and db["images"].contains(request_json["img"])) {
-    // also put in data from db
-    reply image_page;
-  } else {
-    reply error_page;
-  }
+    find req["username"] in db {
+
+        KEY_UNDEFINED -> reply error_page("Invalid request. Please try again.");
+        KEY_NOT_FOUND -> reply error_page("We couldn't find that user.");
+        user -> user_profile_page(user);
+    }
 }
 ```
