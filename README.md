@@ -20,7 +20,7 @@ import error_page from "404.gml";
         let users = SELECT TOP 1 * FROM Users WHERE Username=username;
     
         if (users.length == 1) {
-            reply user_profile_page(user);
+            reply user_profile_page(users[0]);
         } else {
             reply error_page("We couldn't find that user.");
         }
