@@ -7,6 +7,8 @@ Let's see if I can handle web requests with a Ruby webserver
 
 idk how SQL works but ideally it would interact with that
 
+Guava allows you to determine behaviour upon receiving any [HTTP request method](https://en.m.wikipedia.org/wiki/HTTP#Request_methods)
+
 ```
 import user_profile_page from "user_profile.gml"; // gml (guava markup language) are HTML templates
 import error_page from "404.gml";
