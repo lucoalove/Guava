@@ -18,7 +18,7 @@ onrequest "GET" | (req) -> {
 
         KEY_UNDEFINED -> reply error_page("Invalid request. Please try again.");
         KEY_NOT_FOUND -> reply error_page("We couldn't find that user.");
-        user -> user_profile_page(user);
+        user          -> reply user_profile_page(user);
     }
 }
 ```
