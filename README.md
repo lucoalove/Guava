@@ -11,12 +11,12 @@ idk how SQL works but ideally it would interact with that
 import user_profile_page from "user_profile.gml"; // gml (guava markup language) are HTML templates
 import error_page from "404.gml";
 
-onrequest "GET" : req -> {
+@GET request:{"username"=*} -> {
 
-    SELECT req["user"] FROM Users {
+    match (SELECT TOP 1 * FROM Users WHERE username=request["username"]) {
 
-        []    -> reply error_page("We couldn't find that user.");
-        users -> reply user_profile_page(users[0]);
+        user:[0] -> reply user_profile_page(user);
+        _        -> reply error_page("We couldn't find that user.");
     }
 }
 ```
