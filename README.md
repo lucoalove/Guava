@@ -13,10 +13,12 @@ import error_page from "404.gml";
 
 @GET {username=*} -> {
 
-    match (SELECT TOP 1 * FROM Users WHERE Username=username) {
+    let users = SELECT TOP 1 * FROM Users WHERE Username=username;
 
-        user:[0] -> reply user_profile_page(user);
-        _        -> reply error_page("We couldn't find that user.");
+    if (users.length == 1) {
+        reply user_profile_page(user);
+    } else {
+        reply error_page("We couldn't find that user.");
     }
 }
 ```
