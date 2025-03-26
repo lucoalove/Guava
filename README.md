@@ -13,11 +13,17 @@ Guava allows you to determine behaviour upon receiving any [HTTP request method]
 import user_profile_page from "user_profile.gml"; // gml (guava markup language) are HTML templates
 import error_page from "404.gml";
 
+let db = sql_connect(...);
+
+if (db.connect_error) {
+    quit("Could not connect to SQL database.");
+}
+
 @GET {
 
-    (username=*) {
+    (username=*) -> {
 
-        let users = SELECT TOP 1 * FROM Users WHERE Username=username;
+        let users = db.poll("SELECT TOP 1 * FROM Users WHERE Username=" + username);
     
         if (users.length == 1) {
             reply user_profile_page(users[0]);
@@ -26,7 +32,7 @@ import error_page from "404.gml";
         }
     }
 
-    (*) {
+    (*) -> {
         reply error_page("Invalid request.");
     }
 }
